@@ -12,6 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 now = datetime.date.today().strftime("%b-%d-%Y")
 print(now)
 
+### INSERT YOUR USERNAME/PASSWORD ###
 mygithubusername = 'username'
 mygithubpassword = 'password'
 
