@@ -24,7 +24,6 @@ def longpause():
 def shortpause():
     time.sleep(5)
 
-
 def githubusernames(location, language):
         #### GET LIST OF USERS AND CONVERT TO EXCEL ####
 
@@ -102,15 +101,11 @@ def githubusernames(location, language):
         
         time.sleep(5)     
       
-
         #### CONVERT TO DATAFRAME AND TO EXCEL ####
         pd.DataFrame(dev_names).to_excel(filenameandpath, header=False, index=False)
-        
-        
+             
         #### CONVERT THE NEW FILE TO A USEABLE VARIABLE ####
         developerdatafile = (filenameandpath)
-
-
 
         ##### LOAD SELENIUM WEB DRIVER TO OPEN BROWSER TO GRAB EMAILS ####
         driver = webdriver.Chrome('C:\\Users\\dj\\Desktop\\Work_Dev\\Githubscrapper\\chromedriver.exe')   
@@ -158,12 +153,6 @@ def githubusernames(location, language):
                 collected_data['Contributions/year'] = contributions
                 collected_data['Github Profile'] = gitprofile
                 collected_data.to_excel(filenameandpath, index=False)
-
-               
-
-
-
-        
 
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
 githubusernames('boston', 'rust')
