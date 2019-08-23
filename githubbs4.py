@@ -11,8 +11,8 @@ from selenium import webdriver
 now = datetime.date.today().strftime("%b-%d-%Y")
 print(now)
 
-mygithubusername = 'username'
-mygithubpassword = 'password'
+mygithubusername = 'thecodingrecruiter'
+mygithubpassword = 'Good2bme1!'
 
 def rsleep():
         time.sleep(randint(1,4))
