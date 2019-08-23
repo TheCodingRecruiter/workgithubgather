@@ -17,9 +17,6 @@ mygithubpassword = 'password'
 def rsleep():
         time.sleep(randint(1,4))
 
-def longpause():
-    time.sleep(15)
-
 def shortpause():
     time.sleep(5)
 
@@ -164,10 +161,6 @@ def githubusernames(location, language):
                 time.sleep(2)
              
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
-# githubusernames('boston', 'rust')
-
-
-
 
 searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando']
 for i in searchlocation:
