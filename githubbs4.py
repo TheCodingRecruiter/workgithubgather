@@ -7,10 +7,14 @@ import datetime
 from lxml import html
 from random import randint
 from selenium import webdriver
+import configparser
 
+config = configparser.ConfigParser()
 
-mygithubusername = 'username'
-mygithubpassword = 'password'
+config.read('../config/config.ini')
+mygithubusername = config['github']['user']
+mygithubpassword = config['github']['passw']
+
 
 def rsleep():
         time.sleep(randint(1,4))
@@ -38,7 +42,7 @@ def githubusernames(location, language):
         try:
                 usercount = int(usercount[0])
         except:
-                usercount = 2000
+                usercount = 10
         
         print(usercount)
         ### GET THE NUMBER OF PAGES BASED ON NUMBER OF USERS ####
@@ -78,7 +82,7 @@ def githubusernames(location, language):
                 print(url)
                 
                 #### PAUSE BETWEEN EACH INSTANCE RANDOMLY TO SIMULATE HUMAN INTERACTION, NOT COMPUTER ####
-                rsleep()
+                # rsleep()
                 for thenames in data:
                         dev_names.append(thenames.get_text().split())
 
@@ -160,6 +164,7 @@ def githubusernames(location, language):
                 time.sleep(2)
              
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
+
 
 searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando']
 for i in searchlocation:
