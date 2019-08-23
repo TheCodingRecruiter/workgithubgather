@@ -8,11 +8,9 @@ from lxml import html
 from random import randint
 from selenium import webdriver
 
-now = datetime.date.today().strftime("%b-%d-%Y")
-print(now)
 
-mygithubusername = 'thecodingrecruiter'
-mygithubpassword = 'Good2bme1!'
+mygithubusername = 'username'
+mygithubpassword = 'password'
 
 def rsleep():
         time.sleep(randint(1,4))
@@ -21,6 +19,9 @@ def shortpause():
     time.sleep(5)
 
 def githubusernames(location, language):
+        now = datetime.date.today().strftime("%b-%d-%Y")
+        print(now)
+
         #### GET LIST OF USERS AND CONVERT TO EXCEL ####
 
         #### BUILD INITIAL URL USING DEFINED VARIABLE DATA TO GET INITAL USERCOUNT TO FIND NUMBER OF USERS AND PAGE COUNT ####
