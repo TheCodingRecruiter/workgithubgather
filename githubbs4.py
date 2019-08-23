@@ -166,15 +166,44 @@ def githubusernames(location, language):
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
 
 
-searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando']
+searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando', 'Cupertino', 'Mountain+View', 'Santa+Clara', 'Palo+Alto']
 for i in searchlocation:
-        githubusernames(i, 'Php')
-        githubusernames(i, 'Python')
-        githubusernames(i, 'Javascript')
-        githubusernames(i, 'Java')
-        githubusernames(i, 'C++')
-        githubusernames(i, 'Kotlin')
-        githubusernames(i, 'Swift')
-        githubusernames(i, 'Objective-c')
-        githubusernames(i, 'Ruby')
-        githubusernames(i, 'Rust')
+        try:
+                githubusernames(i, 'Kotlin')
+        except:
+                pass
+        
+        try:
+                githubusernames(i, 'Python')
+        except:
+                pass
+        
+        try:
+                githubusernames(i, 'Javascript')
+        except:
+                pass
+        
+        try:
+                githubusernames(i, 'Java')
+        except:
+                pass
+        
+        try:
+                githubusernames(i, 'C++')
+        except:
+                pass
+
+        try: 
+                githubusernames(i, 'Php')
+        except:
+                pass
+        
+        try:
+                githubusernames(i, 'Swift')
+        except:
+                pass
+        
+        try:
+                githubusernames(i, 'Objective-c')
+        except:
+                pass
