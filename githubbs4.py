@@ -171,3 +171,4 @@ for i in searchlocation:
         githubusernames(i, 'Swift')
         githubusernames(i, 'Objective-c')
         githubusernames(i, 'Ruby')
+        githubusernames(i, 'Rust')
