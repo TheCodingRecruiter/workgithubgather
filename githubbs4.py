@@ -7,17 +7,15 @@ import datetime
 from lxml import html
 from random import randint
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
 
 now = datetime.date.today().strftime("%b-%d-%Y")
 print(now)
 
-### INSERT YOUR USERNAME/PASSWORD ###
 mygithubusername = 'username'
 mygithubpassword = 'password'
 
 def rsleep():
-        time.sleep(randint(10,20))
+        time.sleep(randint(1,4))
 
 def longpause():
     time.sleep(15)
@@ -43,7 +41,8 @@ def githubusernames(location, language):
                 usercount = int(usercount[0])
         except:
                 usercount = 2000
-
+        
+        print(usercount)
         ### GET THE NUMBER OF PAGES BASED ON NUMBER OF USERS ####
         startingusercount = usercount
         page_numbers = round(startingusercount/10) + 1
@@ -54,7 +53,7 @@ def githubusernames(location, language):
 
         #### MAKE THE FILENAME BASED ON VARIABLES AND SET THE FILE PATH OF WHERE TO STORE THE FILE ####
         def makefilenameandpath():
-                new_filename = (location + '_' + language)
+                new_filename = (location + '_' + language + '_' + now)
                 ext = 'xlsx'
                 final_filename = '{new_filename}.{ext}'.format(new_filename=new_filename, ext=ext)
                 print(final_filename)
@@ -104,7 +103,7 @@ def githubusernames(location, language):
       
         #### CONVERT TO DATAFRAME AND TO EXCEL ####
         pd.DataFrame(dev_names).to_excel(filenameandpath, header=False, index=False)
-             
+        
         #### CONVERT THE NEW FILE TO A USEABLE VARIABLE ####
         developerdatafile = (filenameandpath)
 
@@ -116,18 +115,21 @@ def githubusernames(location, language):
         sheet = wb.sheet_by_index(0)
         sheet.cell_value(0,0)
         driver.get('https://github.com/login')
-        time.sleep(2)
+        time.sleep(3)
         username = driver.find_element_by_id('login_field')
         username.send_keys(mygithubusername)
         password = driver.find_element_by_id('password')
         password.send_keys(mygithubpassword)
         driver.find_element_by_xpath('//*[@id="login"]/form/div[3]/input[7]').click()
         shortpause()
+        country = []
         dev_emails = []
         developer_name = []
         contributions = []
         gitprofile = []
         for i in range(sheet.nrows):
+                print(usercount)
+                rsleep()
                 username = sheet.cell_value(i,0)
                 githubprofile = (github_pro + username)
                 driver.get(githubprofile)
@@ -137,11 +139,14 @@ def githubusernames(location, language):
                         email = driver.find_element_by_class_name('u-email ').text
                         devname = driver.find_element_by_xpath('//*[@id="js-pjax-container"]/div/div[1]/div[2]/div[2]/div[2]/h1/span[1]').text
                         commits = driver.find_element_by_xpath('//*[@id="js-pjax-container"]/div/div[3]/div[3]/div[2]/div[1]/div/h2').text
+                        
 
+       
                         dev_emails.append(email)
                         developer_name.append(devname)
                         contributions.append(commits)
                         gitprofile.append(githubprofile)
+                        country.append("United States")
                         
                 except:
                         pass
@@ -152,8 +157,26 @@ def githubusernames(location, language):
                 collected_data['Language'] = language
                 collected_data['Developer Email'] = dev_emails
                 collected_data['Contributions/year'] = contributions
+                collected_data['Country'] = country
                 collected_data['Github Profile'] = gitprofile
                 collected_data.to_excel(filenameandpath, index=False)
-
+                usercount = usercount - 1
+                time.sleep(2)
+             
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
-githubusernames('boston', 'rust')
+# githubusernames('boston', 'rust')
+
+
+
+
+searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando']
+for i in searchlocation:
+        githubusernames(i, 'Php')
+        githubusernames(i, 'Python')
+        githubusernames(i, 'Javascript')
+        githubusernames(i, 'Java')
+        githubusernames(i, 'C++')
+        githubusernames(i, 'Kotlin')
+        githubusernames(i, 'Swift')
+        githubusernames(i, 'Objective-c')
+        githubusernames(i, 'Ruby')
