@@ -54,7 +54,7 @@ def githubusernames(location, language):
                 ext = 'xlsx'
                 final_filename = '{new_filename}.{ext}'.format(new_filename=new_filename, ext=ext)
                 print(final_filename)
-                return 'C:/Users/dj/Desktop/Work_Dev/Githubscrapper/{final_filename}'.format(new_filename=new_filename, final_filename=final_filename)
+                return r'GitProData/{final_filename}'.format(new_filename=new_filename, final_filename=final_filename)
         
         #### DEFINE VARIABLE FOR FILENAME/PATH ####
         filenameandpath = makefilenameandpath()
@@ -77,7 +77,7 @@ def githubusernames(location, language):
                 print(url)
                 
                 #### PAUSE BETWEEN EACH INSTANCE RANDOMLY TO SIMULATE HUMAN INTERACTION, NOT COMPUTER ####
-                rsleep()
+                # rsleep()
                 for thenames in data:
                         dev_names.append(thenames.get_text().split())
 
@@ -105,7 +105,7 @@ def githubusernames(location, language):
         developerdatafile = (filenameandpath)
 
         ##### LOAD SELENIUM WEB DRIVER TO OPEN BROWSER TO GRAB EMAILS ####
-        driver = webdriver.Chrome('C:\\Users\\dj\\Desktop\\Work_Dev\\Githubscrapper\\chromedriver.exe')   
+        driver = webdriver.Chrome()   
         github_pro = 'https://github.com/'
         loc = (developerdatafile)
         wb = xlrd.open_workbook(loc)
@@ -162,14 +162,16 @@ def githubusernames(location, language):
              
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
 
-searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando']
-for i in searchlocation:
-        githubusernames(i, 'Php')
-        githubusernames(i, 'Python')
-        githubusernames(i, 'Javascript')
-        githubusernames(i, 'Java')
-        githubusernames(i, 'C++')
-        githubusernames(i, 'Kotlin')
-        githubusernames(i, 'Swift')
-        githubusernames(i, 'Objective-c')
-        githubusernames(i, 'Ruby')
+githubusernames('boston', 'rust')
+
+# searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando']
+# for i in searchlocation:
+#         githubusernames(i, 'Php')
+#         githubusernames(i, 'Python')
+#         githubusernames(i, 'Javascript')
+#         githubusernames(i, 'Java')
+#         githubusernames(i, 'C++')
+#         githubusernames(i, 'Kotlin')
+#         githubusernames(i, 'Swift')
+#         githubusernames(i, 'Objective-c')
+#         githubusernames(i, 'Ruby')
