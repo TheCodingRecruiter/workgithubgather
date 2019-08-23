@@ -77,7 +77,7 @@ def githubusernames(location, language):
                 print(url)
                 
                 #### PAUSE BETWEEN EACH INSTANCE RANDOMLY TO SIMULATE HUMAN INTERACTION, NOT COMPUTER ####
-                # rsleep()
+                rsleep()
                 for thenames in data:
                         dev_names.append(thenames.get_text().split())
 
@@ -137,8 +137,6 @@ def githubusernames(location, language):
                         devname = driver.find_element_by_xpath('//*[@id="js-pjax-container"]/div/div[1]/div[2]/div[2]/div[2]/h1/span[1]').text
                         commits = driver.find_element_by_xpath('//*[@id="js-pjax-container"]/div/div[3]/div[3]/div[2]/div[1]/div/h2').text
                         
-
-       
                         dev_emails.append(email)
                         developer_name.append(devname)
                         contributions.append(commits)
@@ -162,16 +160,14 @@ def githubusernames(location, language):
              
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
 
-githubusernames('boston', 'rust')
-
-# searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando']
-# for i in searchlocation:
-#         githubusernames(i, 'Php')
-#         githubusernames(i, 'Python')
-#         githubusernames(i, 'Javascript')
-#         githubusernames(i, 'Java')
-#         githubusernames(i, 'C++')
-#         githubusernames(i, 'Kotlin')
-#         githubusernames(i, 'Swift')
-#         githubusernames(i, 'Objective-c')
-#         githubusernames(i, 'Ruby')
+searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando']
+for i in searchlocation:
+        githubusernames(i, 'Php')
+        githubusernames(i, 'Python')
+        githubusernames(i, 'Javascript')
+        githubusernames(i, 'Java')
+        githubusernames(i, 'C++')
+        githubusernames(i, 'Kotlin')
+        githubusernames(i, 'Swift')
+        githubusernames(i, 'Objective-c')
+        githubusernames(i, 'Ruby')
