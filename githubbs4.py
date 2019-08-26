@@ -40,12 +40,14 @@ def githubusernames(location, language):
        
         ### GET NUMBER OF USERS/IF LETTER IN TEXT AND NOT JUST INTENGERS, SET TO CERTAIN NUMBER (INTENGER) ####
         usercount = tree.xpath('//*[@id="js-pjax-container"]/div/div[2]/nav[1]/a[9]/span/text()')
+        print(usercount)
         try:
                 usercount = int(usercount[0])
         except:
                 usercount = 3000
         
         print(usercount)
+        # time.sleep(10)
         if usercount >= 1:
                 ### GET THE NUMBER OF PAGES BASED ON NUMBER OF USERS ####
                 startingusercount = usercount
@@ -60,7 +62,6 @@ def githubusernames(location, language):
                         new_filename = (location + '_' + language + '_' + now)
                         ext = 'xlsx'
                         final_filename = '{new_filename}.{ext}'.format(new_filename=new_filename, ext=ext)
-                        print(final_filename)
                         return r'GitProData/{final_filename}'.format(new_filename=new_filename, final_filename=final_filename)
                 
                 #### DEFINE VARIABLE FOR FILENAME/PATH ####
@@ -68,6 +69,7 @@ def githubusernames(location, language):
 
                 #### BUILD EACH PAGE AND SCRAPE THE USERNAMES AND STORE THEM INTO A LIST TO CONVERT TO DATAFRAME THEN EXCEL ####
                 for i in range(page_numbers):
+                        counter = 0
                         #### CREATE THE URL ####
                         urlcount = urlcount + 1
                         first_part_url = 'https://github.com/search?p='
@@ -81,12 +83,15 @@ def githubusernames(location, language):
                         page = requests.get(url)
                         soup = bs(page.text, "html.parser")
                         data = soup.findAll('div', {'class' :'user-list-info ml-2 min-width-0'})
-                        print(url)
+                        
                         
                         #### PAUSE BETWEEN EACH INSTANCE RANDOMLY TO SIMULATE HUMAN INTERACTION, NOT COMPUTER ####
                         # rsleep()
                         for thenames in data:
                                 dev_names.append(thenames.get_text().split())
+                        counter = counter + 1
+        
+                     
 
                 #### GET THE FIRST PAGE OF DATA SINCE IT STARTS ON PAGE TWO ####
                 urlcount = 1
@@ -112,74 +117,80 @@ def githubusernames(location, language):
                 developerdatafile = (filenameandpath)
 
                 ##### LOAD SELENIUM WEB DRIVER TO OPEN BROWSER TO GRAB EMAILS ####
-                driver = webdriver.Chrome()   
-                github_pro = 'https://github.com/'
-                loc = (developerdatafile)
-                wb = xlrd.open_workbook(loc)
-                sheet = wb.sheet_by_index(0)
-                sheet.cell_value(0,0)
-                driver.get('https://github.com/login')
-                time.sleep(3)
-                username = driver.find_element_by_id('login_field')
-                username.send_keys(mygithubusername)
-                password = driver.find_element_by_id('password')
-                password.send_keys(mygithubpassword)
-                driver.find_element_by_xpath('//*[@id="login"]/form/div[3]/input[7]').click()
-                shortpause()
-                country = []
-                dev_emails = []
-                developer_name = []
-                contributions = []
-                gitprofile = []
-                for i in range(sheet.nrows):
-                        print(usercount)
-                        rsleep()
-                        username = sheet.cell_value(i,0)
-                        githubprofile = (github_pro + username)
-                        driver.get(githubprofile)
-                        
-                        ### IF THEY HAVE AN EMAIL, STORE EMAIL, NAME, NUMBER OF COMMITS, AND GITHUB PROFILE TO A LIST TO MANIPULATE DATA LATER ###
-                        try:
-                                email = driver.find_element_by_class_name('u-email ').text
-                                devname = driver.find_element_by_xpath('//*[@id="js-pjax-container"]/div/div[1]/div[2]/div[2]/div[2]/h1/span[1]').text
-                                commits = driver.find_element_by_xpath('//*[@id="js-pjax-container"]/div/div[3]/div[3]/div[2]/div[1]/div/h2').text
+
+                try:
+
+                        driver = webdriver.Chrome()   
+                        github_pro = 'https://github.com/'
+                        loc = (developerdatafile)
+                        wb = xlrd.open_workbook(loc)
+                        sheet = wb.sheet_by_index(0)
+                        sheet.cell_value(0,0)
+                        driver.get('https://github.com/login')
+                        time.sleep(3)
+                        username = driver.find_element_by_id('login_field')
+                        username.send_keys(mygithubusername)
+                        password = driver.find_element_by_id('password')
+                        password.send_keys(mygithubpassword)
+                        driver.find_element_by_xpath('//*[@id="login"]/form/div[3]/input[7]').click()
+                        shortpause()
+                        country = []
+                        dev_emails = []
+                        developer_name = []
+                        contributions = []
+                        gitprofile = []
+                        for i in range(sheet.nrows):
+                                print(usercount)
+                                rsleep()
+                                username = sheet.cell_value(i,0)
+                                githubprofile = (github_pro + username)
+                                driver.get(githubprofile)
                                 
-                                dev_emails.append(email)
-                                developer_name.append(devname)
-                                contributions.append(commits)
-                                gitprofile.append(githubprofile)
-                                country.append("United States")
-                                
-                        except:
-                                pass
-                        ### CONVERT THE LIST TO A DATAFRAME > EXCEL ###
-                        collected_data = pd.DataFrame()
-                        collected_data['Developer Name'] = developer_name
-                        collected_data['Location'] = location
-                        collected_data['Language'] = language
-                        collected_data['Developer Email'] = dev_emails
-                        collected_data['Contributions/year'] = contributions
-                        collected_data['Country'] = country
-                        collected_data['Github Profile'] = gitprofile
-                        collected_data.to_excel(filenameandpath, index=False)
-                        usercount = usercount - 1
-                        time.sleep(2)
+                                ### IF THEY HAVE AN EMAIL, STORE EMAIL, NAME, NUMBER OF COMMITS, AND GITHUB PROFILE TO A LIST TO MANIPULATE DATA LATER ###
+                                try:
+                                        email = driver.find_element_by_class_name('u-email ').text
+                                        devname = driver.find_element_by_xpath('//*[@id="js-pjax-container"]/div/div[1]/div[2]/div[2]/div[2]/h1/span[1]').text
+                                        commits = driver.find_element_by_xpath('//*[@id="js-pjax-container"]/div/div[3]/div[3]/div[2]/div[1]/div/h2').text
+                                        
+                                        dev_emails.append(email)
+                                        developer_name.append(devname)
+                                        contributions.append(commits)
+                                        gitprofile.append(githubprofile)
+                                        country.append("United States")
+                                        
+                                except:
+                                        pass
+                                ### CONVERT THE LIST TO A DATAFRAME > EXCEL ###
+                                collected_data = pd.DataFrame()
+                                collected_data['Developer Name'] = developer_name
+                                collected_data['Location'] = location
+                                collected_data['Language'] = language
+                                collected_data['Developer Email'] = dev_emails
+                                collected_data['Contributions/year'] = contributions
+                                collected_data['Country'] = country
+                                collected_data['Github Profile'] = gitprofile
+                                collected_data.to_excel(filenameandpath, index=False)
+                                usercount = usercount - 1
+                                time.sleep(2)
+                except:
+                        os.remove(developerdatafile)
              
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
 
 
-# testsearch = ['south+bend', 'grants+pass']
+# testsearch = ['indianapolis', 'grants+pass']
 
-# testlang = ['rust', 'go']
+# testlang = ['go', 'rust', 'html']
 
-searchlocation = ['Los+Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando', 'Cupertino', 'Mountain+View', 'Santa+Clara', 'Palo+Alto']
+searchlocation = ['Los Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando', 'Cupertino', 'Mountain View', 'Santa Clara', 'Palo Alto']
 
-searchlanguage = ['PHP', 'Javascript', 'Python', 'Java', 'C++', 'Ruby', 'Go', 'Kotlin', 'Swift', 'Objective-C', 'Rust']
+searchlanguage = ['PHP', 'Javascript', 'Python', 'Java', 'C++', 'Ruby', 'Go', 'Kotlin', 'Swift', 'Objective-C', 'Rust', 'R', 'Scala']
 
 
 for i in searchlocation:
+        i = '+'.join(i.split(' '))
         for j in searchlanguage:
                 try:
                         githubusernames(i, j)
                 except:
-                        pass
+                        print("Did't Pass")
