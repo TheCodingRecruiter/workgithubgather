@@ -177,20 +177,41 @@ def githubusernames(location, language):
              
 ### CALL LOCATION AND LANGUAGE AND RUN THE PROGRAM ####
 
+######### USER INPUT NOW #########
+def startprocess():
+        location = False
+        searchlocation = []
+        language = False
+        searchlanguage = []
 
-# testsearch = ['indianapolis', 'grants+pass']
+        while location == False:
+                searchlocationinput = input('What location: ')
+                searchlocation.append(searchlocationinput)
+                switch = input("Do you want to add another location 'y' or 'n'?").lower()
+                if switch == 'y':
+                        location = False
+                elif switch == 'n':
+                        location = True
+        print(searchlocation)
 
-# testlang = ['go', 'rust', 'html']
+        while language == False:
+                searchlanguageinput = input('What language: ')
+                searchlanguage.append(searchlanguageinput)
+                switch = input("Do you want to add another language 'y' or 'n'?").lower()
+                if switch == 'y':
+                        language = False
+                elif switch == 'n':
+                        language = True
+        
+        print(searchlocation)
+        print(searchlanguage)
+        
+        for i in searchlocation:
+                i = '+'.join(i.split(' '))
+                for j in searchlanguage:
+                        try:
+                                githubusernames(i, j)
+                        except:
+                                print("Did't Pass")
 
-searchlocation = ['Los Angeles', 'Houston', 'Austin', 'Raleigh', 'Charlotte', 'Dallas', 'Orlando', 'Cupertino', 'Mountain View', 'Santa Clara', 'Palo Alto']
-
-searchlanguage = ['PHP', 'Javascript', 'Python', 'Java', 'C++', 'Ruby', 'Go', 'Kotlin', 'Swift', 'Objective-C', 'Rust', 'R', 'Scala']
-
-
-for i in searchlocation:
-        i = '+'.join(i.split(' '))
-        for j in searchlanguage:
-                try:
-                        githubusernames(i, j)
-                except:
-                        print("Did't Pass")
+startprocess()
