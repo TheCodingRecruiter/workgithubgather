@@ -11,7 +11,7 @@ configparser==3.8.1
 constantly==15.1.0
 cryptography==2.7
 cssselect==1.1.0
-Django==2.2.4
+Django==2.2.18
 et-xmlfile==1.0.1
 hyperlink==19.0.0
 idna==2.8
